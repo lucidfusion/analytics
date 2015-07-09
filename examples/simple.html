@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Simple Analytics</title>
+</head>
+<body>
+
+	<div>
+		<p>Email: <span data-lfa="email">n/a</span></p>
+		<p>User Type: <span data-lfa="type">n/a</span></p>
+		<p>Language: <span data-lfa="language"></span></p>
+		<p>OS Type: <span data-lfa="os_type"></span></p>
+		<p>Browser Type: <span data-lfa="browser_type"></span></p>
+		<p>Browser Type: <span data-lfa="browser_version"></span></p>
+	</div>
+	
+	<script>
+		var lfa;!function(){var t=document.createElement("script");t.setAttribute("src","//raw.githubusercontent.com/lucidfusion/analytics/master/analytics.min.js"),t.onload=function(){lfa=new LFA('YOUR_SUBSCRIPTION_TOKEN')},document.body.appendChild(t)}();
+	</script>
+</body>
+</html>

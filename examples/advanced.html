@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Advanced Analytics</title>
+</head>
+<body>
+
+	<div>
+		<p>Email: <span data-lfa="email">n/a</span></p>
+		<p>User Type: <span data-lfa="type">n/a</span></p>
+		<p>Language: <span data-lfa="language"></span></p>
+		<p>OS Type: <span data-lfa="os_type"></span></p>
+		<p>Browser Type: <span data-lfa="browser_type"></span></p>
+		<p>Browser Type: <span data-lfa="browser_version"></span></p>
+	</div>
+	
+	<script src="//raw.githubusercontent.com/lucidfusion/analytics/master/analytics.min.js"></script>
+	<script>
+		function getEmail(){
+			/* 
+			// Here is where you would parse query strings or 
+			// some solution to retrieve known users from your 
+			// CRM or Marketing Platform
+			*/
+			return 'apps@lucidfusion.com';
+		}
+		var lfa = new LFA({
+			subscription_token: 'YOUR_SUBSCRIPTION_TOKEN',
+			beforeCreateVisitor(data) {
+				data.email = getEmail();
+			}
+		});
+	</script>
+</body>
+</html>
