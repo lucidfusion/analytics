@@ -1,9 +1,9 @@
 var lfa;
 (function(){
 	var s = document.createElement('script');
-	s.setAttribute('src', '//lfa.lucidfusion.com/public/analytics.latest.min.js');
+	s.setAttribute('src', '//raw.githubusercontent.com/lucidfusion/analytics/master/analytics.min.js');
 	s.onload = function(){
-	lfa = new LFA('Xz2d4Tco77p620XZ753PGQRaa5K5QESi');
+	lfa = new LFA('YOUR_SUBSCRIPTION_TOKEN');
 	};
 	document.body.appendChild(s);
 })();
