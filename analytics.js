@@ -9,17 +9,17 @@ var LFA = LFA || function(token){
 	
 	//set optional defaults
 	if(typeof token == 'string') {
-		this.data.subscription_token = token;	
+		this.data.property = token;	
 	} else if(typeof token == 'object') {
-		this.data.subscription_token = token.subscription_token;	
+		this.data.property = token.property;	
 	} else {
 		_consolog('error', 'Invalid constructor argument. Expected String or Object.');
 	}
 	
 	var _defaults = {};
-	_defaults.autosends = ['pageview'];
+	_defaults.autosends = ['page_view'];
 	_defaults.afterConnect = function(){
-		if(_check_autosend('pageview')) _self.send('pageview');
+		if(_check_autosend('page_view')) _self.send('page_view');
 	}
 	_defaults.beforeCreateVisitor = function(data){
 		
@@ -322,7 +322,7 @@ var LFA = LFA || function(token){
 				}
 				endpoint = '/event';
 				send_obj = {};
-				send_obj.subscription_token = _self.data.subscription_token;
+				send_obj.property = _self.data.property;
 				send_obj.visitor_uuid = _self.data.visitor_uuid;
 				send_obj.session_uuid = _self.data.session_uuid;
 				send_obj.events = events;
@@ -338,7 +338,7 @@ var LFA = LFA || function(token){
 							send.relation_value = send.relation_value || 1;
 							endpoint = '/event';
 							send_obj = send;
-							send_obj.subscription_token = _self.data.subscription_token;
+							send_obj.property = _self.data.property;
 							send_obj.visitor_uuid = _self.data.visitor_uuid;
 							send_obj.session_uuid = _self.data.session_uuid;
 							send_obj.path = document.location.pathname;
@@ -348,14 +348,14 @@ var LFA = LFA || function(token){
 							return _consolog('error', 'Missing required event info. Requires category, action and label.');
 						}
 						break;
-					case 'pageview':
+					case 'page_view':
 						endpoint = '/behavior';
 						send_obj = {
-							subscription_token: _self.data.subscription_token,
+							property: _self.data.property,
 							visitor_uuid: _self.data.visitor_uuid,
 							session_uuid: _self.data.session_uuid,
 							path: document.location.pathname,
-							action: 'view',
+							action: 'page_view',
 							recorded: new Date().getTime()
 						}
 						break;
