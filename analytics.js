@@ -9,17 +9,17 @@ var LFA = LFA || function(token){
 	
 	//set optional defaults
 	if(typeof token == 'string') {
-		this.data.property = token;	
+		this.data.property_id = token;	
 	} else if(typeof token == 'object') {
-		this.data.property = token.property;	
+		this.data.property_id = token.property_id;	
 	} else {
 		_consolog('error', 'Invalid constructor argument. Expected String or Object.');
 	}
 	
 	var _defaults = {};
-	_defaults.autosends = ['page_view'];
+	_defaults.autosends = ['pageview'];
 	_defaults.afterConnect = function(){
-		if(_check_autosend('page_view')) _self.send('page_view');
+		if(_check_autosend('pageview')) _self.send('pageview');
 	}
 	_defaults.beforeCreateVisitor = function(data){
 		
@@ -322,7 +322,7 @@ var LFA = LFA || function(token){
 				}
 				endpoint = '/event';
 				send_obj = {};
-				send_obj.property = _self.data.property;
+				send_obj.property_id = _self.data.property_id;
 				send_obj.visitor_uuid = _self.data.visitor_uuid;
 				send_obj.session_uuid = _self.data.session_uuid;
 				send_obj.events = events;
@@ -338,7 +338,7 @@ var LFA = LFA || function(token){
 							send.relation_value = send.relation_value || 1;
 							endpoint = '/event';
 							send_obj = send;
-							send_obj.property = _self.data.property;
+							send_obj.property_id = _self.data.property_id;
 							send_obj.visitor_uuid = _self.data.visitor_uuid;
 							send_obj.session_uuid = _self.data.session_uuid;
 							send_obj.path = document.location.pathname;
@@ -348,14 +348,13 @@ var LFA = LFA || function(token){
 							return _consolog('error', 'Missing required event info. Requires category, action and label.');
 						}
 						break;
-					case 'page_view':
-						endpoint = '/behavior';
+					case 'pageview':
+						endpoint = '/pageview';
 						send_obj = {
-							property: _self.data.property,
+							property_id: _self.data.property_id,
 							visitor_uuid: _self.data.visitor_uuid,
 							session_uuid: _self.data.session_uuid,
 							path: document.location.pathname,
-							action: 'page_view',
 							recorded: new Date().getTime()
 						}
 						break;
@@ -482,5 +481,5 @@ var parts=["source","protocol","authority","userInfo","user","password","host","
  *    `socket.post( url, [data], [cb] )`
  */
 !function(){function e(e){function o(t){return t=t||{prefix:!0},"object"!=typeof console||"function"!=typeof console.log||"function"!=typeof console.log.bind?function(){}:function(){var o=Array.prototype.slice.call(arguments);if("production"!==e.sails.environment){var n="";t.prefix&&o.unshift(n),console.log.bind(console).apply(this,o)}}}function i(e){var t=e.requestQueue;if(t){for(var o in t){var n={}.hasOwnProperty.call(t,o);n&&a(e,t[o])}t=null}}function s(e,t){if(e=e||{},"undefined"==typeof window)return t();var o=document.createElement("script");window._sailsIoJSConnect=function(e){o.parentNode.removeChild(o),t(e)},o.src=e.url,document.getElementsByTagName("head")[0].appendChild(o)}function u(e){this.body=e.body||{},this.headers=e.headers||{},this.statusCode=e.statusCode||200,(this.statusCode<200||this.statusCode>=400)&&(this.error=this.body||this.statusCode)}function a(e,t){if(!e._raw)throw new Error("Failed to emit from socket- raw SIO socket is missing.");var o=t.cb;delete t.cb;var n=t.method;e._raw.emit(n,t,function(e){o&&o(e.body,new u(e))})}function c(e){var t=this;e=e||{},t.useCORSRouteToGetCookie=e.useCORSRouteToGetCookie,t.url=e.url,t.multiplex=e.multiplex,t.transports=e.transports,t.eventQueue={},t.on("sails:parseError",function(e){d("Sails encountered an error parsing a socket message sent from this client, and did not have access to a callback function to respond with."),d("Error details:",e)})}if(e||(e=r),!e)throw new Error("`sails.io.js` requires a socket.io client, but `io` was not passed in.");var d=o();return d.noPrefix=o({prefix:!1}),u.prototype.toString=function(){return"[ResponseFromSails]  -- Status: "+this.statusCode+"  -- Headers: "+this.headers+"  -- Body: "+this.body},u.prototype.toPOJO=function(){return{body:this.body,headers:this.headers,statusCode:this.statusCode}},u.prototype.pipe=function(){return new Error("Client-side streaming support not implemented yet.")},c.prototype._connect=function(){var t=this;t.useCORSRouteToGetCookie=t.useCORSRouteToGetCookie||e.sails.useCORSRouteToGetCookie,t.url=t.url||e.sails.url,t.transports=t.transports||e.sails.transports,t.url=t.url?t.url.replace(/(\/)$/,""):void 0,"string"!=typeof t.query?t.query=n.versionString:t.query+="&"+n.versionString;var o=function(){if("undefined"==typeof window||"undefined"==typeof window.location)return!1;if("string"!=typeof t.url)return!1;var e=function(){try{e=t.url.match(/^([a-z]+:\/\/)/i)[1].toLowerCase()}catch(o){}return e=e||"http://"}(),o=!!t.url.match("^https"),n=function(){try{return t.url.match(/^[a-z]+:\/\/[^:]*:([0-9]*)/i)[1]}catch(e){}return o?"443":"80"}(),r=t.url.replace(/^([a-z]+:\/\/)/i,"");if(e.replace(/[:\/]/g,"")!==window.location.protocol.replace(/[:\/]/g,""))return!0;var i=0!==r.search(window.location.hostname);if(!i)return!0;var s=window.location.protocol.match(/https/i),u=window.location.port+""||(s?"443":"80");return n!==u?!0:!1}();!function(e){if(!t.useCORSRouteToGetCookie||!o)return e();var n=t.url;if(n+="string"==typeof t.useCORSRouteToGetCookie?t.useCORSRouteToGetCookie:"/__getcookie","undefined"!=typeof window)return void s({url:n,method:"GET"},e);var r=require("request");r.get(n,function(t){return t?void d("Failed to connect socket (failed to get cookie)","Error:",t):void e()})}(function(){t._raw=e(t.url,t),t.replay(),t.on("connect",function(){d.noPrefix("\n\n  |>    Now connected to Sails.\n\\___/   For help, see: http://bit.ly/1DmTvgK\n        (using "+e.sails.sdk.platform+" SDK @v"+e.sails.sdk.version+")\n\n\n")}),t.on("disconnect",function(){t.connectionLostTimestamp=(new Date).getTime(),d("===================================="),d("Socket was disconnected from Sails."),d("Usually, this is due to one of the following reasons:\n -> the server "+(t.url?t.url+" ":"")+"was taken down\n -> your browser lost internet connectivity"),d("====================================")}),t.on("reconnecting",function(e){d("\n        Socket is trying to reconnect to Sails...\n_-|>_-  (attempt #"+e+")\n\n")}),t.on("reconnect",function(){var e=(new Date).getTime()-t.connectionLostTimestamp,o=e/1e3;d("\n  |>    Socket reconnected successfully after\n\\___/   being offline for ~"+o+" seconds.\n\n")}),t.on("error",function(e){d("Failed to connect socket (probably due to failed authorization on server)","Error:",e)})})},c.prototype.disconnect=function(){if(!this._raw)throw new Error("Cannot disconnect- socket is already disconnected");return this._raw.disconnect()},c.prototype.isConnected=function(){return this._raw?!!this._raw.connected:!1},c.prototype.replay=function(){var e=this;for(var t in e.eventQueue)for(var o in e.eventQueue[t])e._raw.on(t,e.eventQueue[t][o]);if(e.isConnected())i(e);else{var n=!1;e._raw.on("connect",function(){n||(i(e),n=!0)})}return e},c.prototype.on=function(e,t){return this._raw?(this._raw.on(e,t),this):(this.eventQueue[e]?this.eventQueue[e].push(t):this.eventQueue[e]=[t],this)},c.prototype.off=function(e,t){return this._raw?(this._raw.off(e,t),this):(this.eventQueue[e]&&this.eventQueue[e].indexOf(t)>-1&&this.eventQueue[e].splice(this.eventQueue[e].indexOf(t),1),this)},c.prototype.removeAllListeners=function(){return this._raw?(this._raw.removeAllListeners(),this):(this.eventQueue={},this)},c.prototype.get=function(e,t,o){return"function"==typeof t&&(o=t,t={}),this.request({method:"get",params:t,url:e},o)},c.prototype.post=function(e,t,o){return"function"==typeof t&&(o=t,t={}),this.request({method:"post",data:t,url:e},o)},c.prototype.put=function(e,t,o){return"function"==typeof t&&(o=t,t={}),this.request({method:"put",params:t,url:e},o)},c.prototype["delete"]=function(e,t,o){return"function"==typeof t&&(o=t,t={}),this.request({method:"delete",params:t,url:e},o)},c.prototype.request=function(e,t){var o='Usage:\nsocket.request( options, [fnToCallWhenComplete] )\n\noptions.url :: e.g. "/foo/bar"\noptions.method :: e.g. "get", "post", "put", or "delete", etc.\noptions.params :: e.g. { emailAddress: "mike@sailsjs.org" }\noptions.headers :: e.g. { "x-my-custom-header": "some string" }';if("object"!=typeof e||"string"!=typeof e.url)throw new Error("Invalid or missing URL!\n"+o);if(e.method&&"string"!=typeof e.method)throw new Error('Invalid `method` provided (should be a string like "post" or "put")\n'+o);if(e.headers&&"object"!=typeof e.headers)throw new Error("Invalid `headers` provided (should be an object with string values)\n"+o);if(e.params&&"object"!=typeof e.params)throw new Error("Invalid `params` provided (should be an object with string values)\n"+o);if(t&&"function"!=typeof t)throw new Error("Invalid callback function!\n"+o);var n={method:e.method.toLowerCase()||"get",headers:e.headers||{},data:e.params||e.data||{},url:e.url.replace(/^(.+)\/*\s*$/,"$1"),cb:t};return this.isConnected()?void a(this,n):(this.requestQueue=this.requestQueue||[],void this.requestQueue.push(n))},c.prototype._request=function(){throw new Error("`_request()` was a private API deprecated as of v0.11 of the sails.io.js client. Use `.request()` instead.")},e.sails={autoConnect:!0,useCORSRouteToGetCookie:!0,environment:t.match(/(\#production|\.min\.js)/g)?"production":"development",sdk:n,transports:["polling","websocket"]},e.sails.connect=function(e,t){t=t||{},t.url=e||t.url||void 0;var o=new c(t);return o._connect(),o},e.socket=new c,setTimeout(function(){return e.sails.autoConnect?void e.socket._connect():void delete e.socket},0),e}var t=function(){if("object"!=typeof window||"object"!=typeof window.document||"function"!=typeof window.document.getElementsByTagName)return"";var e=window.document.getElementsByTagName("script"),t=e[e.length-1];return t.src}(),o={version:"__sails_io_sdk_version",platform:"__sails_io_sdk_platform",language:"__sails_io_sdk_language"},n={version:"0.11.0",platform:"undefined"==typeof module?"browser":"node",language:"javascript"};n.versionString=o.version+"="+n.version+"&"+o.platform+"="+n.platform+"&"+o.language+"="+n.language;var r="undefined"!=typeof io?io:null;return"object"==typeof module&&"undefined"!=typeof module.exports?(module.exports=e,e):e()}();
-io.sails.url = 'http://lfa.lucidfusion.com';
+io.sails.url = 'http://lfa.lucidfusion.com:80';
 }
